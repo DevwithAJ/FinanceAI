@@ -1,4 +1,4 @@
-# FinanceAI — Final Integrated Project
+# FinanceAI — Intelligent Personal Finance & Risk Analysis System
 
 FinanceAI is a **Flask-based personal finance and risk-analysis portfolio project** developed as a four-member B.Tech CSE team project. It combines authentication, database persistence, explainable financial-health scoring, machine-learning experiments, APIs, analysis history, and an offline educational assistant in one integrated application.
 
@@ -70,7 +70,6 @@ The main objective of FinanceAI is to create a unified financial analytics platf
 - SQLite out-of-the-box
 - Optional MySQL / XAMPP backend
 - Professional responsive UI
-- Windows setup scripts
 - Sample inputs
 - Smoke tests
 - Exact scikit-learn version pinned to 1.8.0
@@ -113,7 +112,6 @@ The main objective of FinanceAI is to create a unified financial analytics platf
 - Python virtual environment
 - Smoke tests
 - Sample JSON inputs
-- PowerShell setup
 - XAMPP / MySQL optional configuration
 
 ---
@@ -409,8 +407,6 @@ python -m pip install --upgrade pip
 pip uninstall scikit-learn -y
 pip install -r requirements.txt
 
-Copy-Item .env.example .env
-
 python init_db.py
 python smoke_test.py
 python app.py
@@ -422,19 +418,6 @@ Open:
 http://127.0.0.1:5000
 ```
 
-## Why uninstall scikit-learn first?
-
-The included model `.pkl` files were created with **scikit-learn 1.8.0**.
-
-`requirements.txt` pins:
-
-```text
-scikit-learn==1.8.0
-```
-
-This prevents the version-mismatch warnings caused by loading those model files under scikit-learn 1.9.1.
-
----
 
 # Web Routes
 
@@ -618,22 +601,6 @@ All four members can jointly contribute to:
 
 ---
 
-# Suggested Final Demo Flow
-
-1. **Ajit Kumar** introduces FinanceAI and the four-member team.
-2. **Ajit Kumar** explains problem statement, objective and architecture.
-3. Register/login a demo user.
-4. **Ajeet Kumar** demonstrates Personal Finance.
-5. **Ajeet Kumar** explains Health Score + recommendations + History.
-6. **Sonu Kumar** demonstrates Credit Stress.
-7. **Sonu Kumar** explains Logistic Regression, metrics, threshold and proxy-target limitation.
-8. **Pranav Kr Mishra** demonstrates Loan Risk.
-9. **Pranav Kr Mishra** explains Extra Trees, class imbalance, experimental score and input validation.
-10. Show the FinanceAI Assistant.
-11. **Ajit Kumar** opens `/api/v1/status` and explains the unified backend.
-12. **Ajit Kumar** closes with responsible-use limitations and future scope.
-
----
 
 # Future Scope
 
@@ -667,16 +634,115 @@ The Credit Stress and Loan Risk modules are experimental ML demonstrations.
 
 **FinanceAI must never be used to automatically approve or reject a credit card, loan or any other financial product.**
 
----
 
-# Project Structure
-
-See:
+## 📂 Project Structure
 
 ```text
-PROJECT_STRUCTURE.txt
+FinanceAI/
+│
+├── .env
+├── FINAL_VALIDATION.json
+├── README.md
+├── app.py
+├── config.py
+├── database.py
+├── init_db.py
+├── smoke_test.py
+├── requirements.txt
+│
+├── database/
+│   ├── schema_mysql.sql
+│   └── schema_sqlite.sql
+│
+├── docs/
+│   ├── API.md
+│   ├── DEPLOYMENT.md
+│   ├── FINAL_DEMO_GUIDE.md
+│   ├── FINAL_REPORT.md
+│   ├── MYSQL_XAMPP.md
+│   ├── PROJECT_STATUS.md
+│   ├── SECURITY.md
+│   └── TEAM.md
+│
+├── models/
+│   ├── credit_card/
+│   │   ├── credit_card_model_candidate_pipeline.pkl
+│   │   ├── credit_card_step6_model_metadata.json
+│   │   ├── credit_card_step7_diagnostics_summary.json
+│   │   └── credit_card_step7_threshold_config.json
+│   │
+│   └── loan_risk/
+│       ├── loan_risk_model_candidate_pipeline.pkl
+│       ├── loan_risk_step6_model_metadata.json
+│       ├── loan_risk_step7_diagnostics_summary.json
+│       └── loan_risk_step7_threshold_config.json
+│
+├── samples/
+│   ├── credit_stress_sample.json
+│   ├── loan_risk_sample.json
+│   └── personal_finance_sample.json
+│
+├── services/
+│   ├── __init__.py
+│   ├── assistant.py
+│   ├── financial_health.py
+│   ├── loan_feature_builder.py
+│   ├── model_service.py
+│   ├── recommendation_engine.py
+│   ├── security.py
+│   └── system_status.py
+│
+├── static/
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── app.js
+│
+└── templates/
+    ├── base.html
+    ├── home.html
+    ├── dashboard.html
+    ├── about.html
+    ├── assistant.html
+    ├── profile.html
+    │
+    ├── auth/
+    │   ├── login.html
+    │   └── register.html
+    │
+    ├── errors/
+    │   ├── 400.html
+    │   └── 404.html
+    │
+    ├── history/
+    │   ├── list.html
+    │   └── detail.html
+    │
+    └── modules/
+        ├── personal_finance.html
+        ├── personal_finance_result.html
+        ├── credit_stress.html
+        ├── loan_risk.html
+        └── model_result.html
 ```
 
+---
+
+##  Architecture Overview
+
+- **Frontend:** HTML, CSS, JavaScript, Bootstrap
+- **Backend:** Python, Flask
+- **Database:** MySQL / SQLite
+- **Machine Learning:** Scikit-learn
+- **Security:** Password Hashing, Input Validation, Session Management
+- **AI Modules:**
+  - Personal Finance Health Analysis
+  - Credit Stress Prediction
+  - Loan Risk Assessment
+  - Financial Recommendations
+  - AI Financial Assistant
+
+---
 ---
 
 # Documentation
@@ -690,7 +756,6 @@ The `docs/` folder contains:
 - `SECURITY.md`
 - `DEPLOYMENT.md`
 - `MYSQL_XAMPP.md`
-- `RUN_WINDOWS.md`
 - `PROJECT_STATUS.md`
 
 ---
@@ -702,3 +767,19 @@ The `docs/` folder contains:
 **Team Leader:** Ajit Kumar
 
 **Members:** Ajeet Kumar · Sonu Kumar · Pranav Kr Mishra
+
+---
+
+# Disclaimer
+
+FinanceAI is an educational and portfolio-based project.
+
+The Credit Stress and Loan Risk modules are experimental machine learning demonstrations and must not be used for actual loan approval, credit approval, or financial decision-making.
+
+---
+
+#  License
+
+This project is developed for educational, academic, and portfolio purposes only.
+
+© 2026 FinanceAI Team. All Rights Reserved.
