@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block title %}Edit Transaction · FinanceAI{% endblock %}{% block content %}
+<section class="page-head"><div><span class="eyebrow">TRANSACTION LEDGER</span><h1>Edit Transaction</h1><p>Correct the entry and FinanceAI analytics will use the updated values immediately.</p></div></section>
+<section class="card form-card"><form method="post" class="form-stack" id="transactionForm"><input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+<label>Type<select name="transaction_type" id="transactionType"><option value="expense" {% if row.transaction_type=='expense' %}selected{% endif %}>Expense</option><option value="income" {% if row.transaction_type=='income' %}selected{% endif %}>Income</option></select></label>
+<label>Amount (₹)<input type="number" name="amount" min="0.01" step="0.01" value="{{ row.amount }}" required></label>
+<label>Category<select name="category" id="transactionCategory">{% for c in expense_categories %}<option data-kind="expense" value="{{ c }}" {% if row.category==c %}selected{% endif %}>{{ c }}</option>{% endfor %}{% for c in income_categories %}<option data-kind="income" value="{{ c }}" {% if row.category==c %}selected{% endif %}>{{ c }}</option>{% endfor %}</select></label>
+<label>Date<input type="date" name="transaction_date" value="{{ row.transaction_date }}" required></label>
+<label>Payment Method<select name="payment_method">{% for p in payment_methods %}<option {% if row.payment_method==p %}selected{% endif %}>{{ p }}</option>{% endfor %}</select></label>
+<label>Description<input name="description" maxlength="255" value="{{ row.description or '' }}"></label>
+<label class="check-row"><input type="checkbox" name="is_recurring" value="1" {% if row.is_recurring %}checked{% endif %}> Recurring transaction</label>
+<div class="actions"><button class="btn primary">Save Changes</button><a class="btn ghost" href="{{ url_for('transactions') }}">Cancel</a></div></form></section>
+{% endblock %}

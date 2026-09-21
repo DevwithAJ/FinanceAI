@@ -1,0 +1,9 @@
+{
+  "selection_source": "5-fold OOF predictions on Jan-Feb training only",
+  "selection_metric": "F1",
+  "recommended_threshold": 0.23200238873039322,
+  "best_f1": 0.12222222222222222,
+  "best_f1_precision": 0.21568627450980393,
+  "best_f1_recall": 0.08527131782945736,
+  "test_used_for_threshold_selection": false
+}

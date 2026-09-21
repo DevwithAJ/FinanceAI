@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · FinanceAI 2.0{% endblock %}
+{% block content %}
+<section class="page-head dashboard-head">
+  <div><span class="eyebrow">FINANCEAI 2.0 DASHBOARD</span><h1>Hello, {{ current_user.full_name }}</h1><p>Your cash flow, goals, net worth, ML insights and risk tools in one place.</p></div>
+  <div class="score-orb">{% if stats.latest_health %}<strong>{{ stats.latest_health.score|int }}</strong><span>{{ stats.latest_health.label }}</span>{% else %}<strong>—</strong><span>Run health score</span>{% endif %}</div>
+</section>
+
+<div class="grid four metrics-grid">
+  <article class="card metric-card"><span>{{ month }} Income</span><strong>₹{{ '%.0f'|format(month_totals.income) }}</strong></article>
+  <article class="card metric-card"><span>{{ month }} Expenses</span><strong>₹{{ '%.0f'|format(month_totals.expense) }}</strong></article>
+  <article class="card metric-card"><span>Savings Rate</span><strong>{{ '%.1f'|format(month_totals.savings_rate) }}%</strong></article>
+  <article class="card metric-card"><span>Net Worth</span><strong>₹{{ '%.0f'|format(net_worth.net_worth) }}</strong></article>
+</div>
+
+{% if month_totals.count == 0 %}
+<div class="notice">Your transaction ledger is empty. Add transactions or load demo data to unlock forecasts, anomaly detection and spending analytics.</div>
+{% endif %}
+
+<section class="section">
+  <div class="section-head"><span class="eyebrow">MONEY MANAGEMENT</span><h2>Core Finance Tools</h2></div>
+  <div class="grid three">
+    <a class="card module-card" href="{{ url_for('transactions') }}"><span class="module-tag">LEDGER</span><h3>Transactions</h3><p>Track income and expenses, import/export CSV and build your personal dataset.</p><span class="arrow">Open →</span></a>
+    <a class="card module-card" href="{{ url_for('budget') }}"><span class="module-tag">PLANNER</span><h3>Budget & 50/30/20</h3><p>Set category limits and compare real spending with a 50/30/20 baseline.</p><span class="arrow">Open →</span></a>
+    <a class="card module-card" href="{{ url_for('goals') }}"><span class="module-tag">GOALS</span><h3>Goal Planner</h3><p>Track target amounts, progress, time remaining and monthly contribution needs.</p><span class="arrow">Open →</span></a>
+    <a class="card module-card" href="{{ url_for('net_worth') }}"><span class="module-tag">WEALTH</span><h3>Net Worth</h3><p>Track assets, investments and liabilities with a live net-worth total.</p><span class="arrow">Open →</span></a>
+    <a class="card module-card" href="{{ url_for('forecast') }}"><span class="module-tag">ML FORECAST</span><h3>30 / 60 / 90 Day Forecast</h3><p>Project income, expenses and savings using your monthly transaction history.</p><span class="arrow">Open →</span></a>
+    <a class="card module-card" href="{{ url_for('spending_insights') }}"><span class="module-tag">ML INSIGHTS</span><h3>Spending Behavior</h3><p>K-Means category bands plus Isolation Forest anomaly detection.</p><span class="arrow">Open →</span></a>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><span class="eyebrow">ANALYSIS</span><h2>FinanceAI Models</h2></div>
+  <div class="grid three">
+    <a class="card module-card" href="{{ url_for('personal_finance') }}"><span class="module-tag">PRIMARY</span><h3>Financial Health</h3><p>Calculate a 0–100 score with prioritized smart recommendations.</p><span class="arrow">Open →</span></a>
+    <a class="card module-card" href="{{ url_for('credit_stress') }}"><span class="module-tag warning-text">EXPERIMENTAL</span><h3>Credit Stress</h3><p>Run the trained financial-stress proxy classifier.</p><span class="arrow">Open →</span></a>
+    <a class="card module-card" href="{{ url_for('loan_risk') }}"><span class="module-tag warning-text">EXPERIMENTAL</span><h3>Loan Risk</h3><p>Explore the trained historical risk-ranking model responsibly.</p><span class="arrow">Open →</span></a>
+    <a class="card module-card" href="{{ url_for('assistant') }}"><span class="module-tag">LOCAL RAG</span><h3>FinanceAI Assistant</h3><p>Local finance explanations grounded in built-in knowledge and your latest account data. No external AI API required.</p><span class="arrow">Ask →</span></a>
+    <a class="card module-card" href="{{ url_for('schemes') }}"><span class="module-tag">INDIA</span><h3>Government Schemes</h3><p>Educational scheme discovery with reminders to verify current official terms.</p><span class="arrow">Explore →</span></a>
+    <a class="card module-card" href="{{ url_for('model_lab') }}"><span class="module-tag">DEVELOPER</span><h3>Model Lab</h3><p>Inspect model thresholds, feature counts, ML methods and local RAG status.</p><span class="arrow">Inspect →</span></a>
+  </div>
+</section>
+
+<div class="grid two section">
+  <section class="card">
+    <div class="card-title-row"><div><span class="eyebrow">NEXT 30 DAYS</span><h2>Cash-flow Forecast</h2></div><a class="text-link" href="{{ url_for('forecast') }}">Details</a></div>
+    {% if forecast.ok %}
+      {% set f = forecast.horizons[0] %}
+      <div class="metric-row"><span>Predicted income</span><strong>₹{{ '%.0f'|format(f.income) }}</strong></div>
+      <div class="metric-row"><span>Predicted expenses</span><strong>₹{{ '%.0f'|format(f.expense) }}</strong></div>
+      <div class="metric-row"><span>Predicted savings</span><strong>₹{{ '%.0f'|format(f.savings) }}</strong></div>
+      <p class="muted">Method: {{ forecast.method }} · {{ forecast.months_of_history }} month(s) history</p>
+    {% else %}<p class="muted">Add transaction history to generate a forecast.</p>{% endif %}
+  </section>
+  <section class="card">
+    <div class="card-title-row"><div><span class="eyebrow">SMART REVIEW</span><h2>Unusual Spending</h2></div><a class="text-link" href="{{ url_for('spending_insights') }}">Inspect</a></div>
+    <div class="metric-row"><span>Flagged transactions</span><strong>{{ anomalies.count }}</strong></div>
+    <div class="metric-row"><span>Detection method</span><strong>{{ anomalies.method }}</strong></div>
+    <p class="muted">Flags are review prompts, not proof of fraud.</p>
+  </section>
+</div>
+
+<section class="card section">
+  <div class="card-title-row"><div><span class="eyebrow">RECENT</span><h2>Analysis History</h2></div><a class="text-link" href="{{ url_for('history') }}">View all</a></div>
+  {% if recent %}<div class="table-wrap"><table><thead><tr><th>Module</th><th>Result</th><th>Score</th><th>Date</th></tr></thead><tbody>
+  {% for r in recent %}<tr><td>{{ r.module_name.replace('_',' ')|title }}</td><td>{{ r.label or '—' }}</td><td>{{ '%.3f'|format(r.score) if r.score is not none else '—' }}</td><td>{{ r.created_at }}</td></tr>{% endfor %}
+  </tbody></table></div>{% else %}<p class="muted">No analyses yet.</p>{% endif %}
+</section>
+{% endblock %}

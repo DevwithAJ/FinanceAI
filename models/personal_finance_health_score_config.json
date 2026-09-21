@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "type": "transparent rule-based financial health score",
+  "maximum_score": 100,
+  "components": {
+    "cash_flow_expense_burden": 25,
+    "debt_health": 20,
+    "emergency_fund": 20,
+    "savings_progress": 15,
+    "investment": 10,
+    "credit": 10
+  },
+  "levels": {
+    "Excellent": "85-100",
+    "Good": "70-84",
+    "Moderate": "55-69",
+    "Weak": "40-54",
+    "Critical": "0-39"
+  },
+  "notes": [
+    "Educational financial health indicator, not professional financial advice.",
+    "Does not use the weak Step 6 predictive model as a production decision source.",
+    "Rules are transparent and should be validated/refined with domain experts before real-world deployment."
+  ]
+}

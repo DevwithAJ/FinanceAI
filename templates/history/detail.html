@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}{{ detail.title }} #{{ row.id }} · FinanceAI{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div><span class="eyebrow">SAVED ANALYSIS #{{ row.id }}</span><h1>{{ detail.title }}</h1><p>{{ detail.description }}</p></div>
+  <a class="btn ghost" href="{{ url_for('history') }}">← Back to History</a>
+</section>
+
+<section class="card history-summary-card">
+  <div class="grid four metrics-grid">
+    <div class="history-summary-item"><span>Level / Result</span><strong><span class="risk-pill {{ detail.tone }}">{{ detail.result_display }}</span></strong></div>
+    <div class="history-summary-item"><span>Score</span><strong>{{ detail.score_display }}</strong></div>
+    <div class="history-summary-item"><span>Record</span><strong>#{{ row.id }}</strong></div>
+    <div class="history-summary-item"><span>Date</span><strong>{{ detail.date_display }}</strong></div>
+  </div>
+  <div class="notice history-meaning-box"><strong>Simple meaning:</strong> {{ detail.meaning }}</div>
+  {% if detail.warning %}<div class="notice warning-notice"><strong>Important:</strong> {{ detail.warning }}</div>{% endif %}
+</section>
+
+{% if detail.insights %}
+<section class="card section">
+  <div class="card-title-row"><div><span class="eyebrow">EASY EXPLANATION</span><h2>Profile observations</h2></div></div>
+  <p class="muted">These observations help you read your inputs. They are not feature-attribution claims about why the model produced its score.</p>
+  <div class="table-wrap"><table class="readable-detail-table insight-table">
+    <thead><tr><th>Factor</th><th>Your Value</th><th>Meaning</th></tr></thead><tbody>
+    {% for item in detail.insights %}<tr><td><strong>{{ item.factor }}</strong></td><td><span class="risk-dot {{ item.tone }}"></span>{{ item.value }}</td><td>{{ item.meaning }}</td></tr>{% endfor %}
+    </tbody></table></div>
+</section>
+{% endif %}
+
+{% if detail.recommendations %}
+<section class="card section">
+  <div class="card-title-row"><div><span class="eyebrow">ACTION PLAN</span><h2>What you can do</h2></div></div>
+  <div class="friendly-recommendations">{% for rec in detail.recommendations %}<div class="friendly-rec"><span>{{ loop.index }}</span><p>{{ rec }}</p></div>{% endfor %}</div>
+</section>
+{% endif %}
+
+<div class="grid two section history-detail-grid">
+  <section class="card">
+    <div class="card-title-row"><div><span class="eyebrow">INPUT</span><h2>Information Used</h2></div></div>
+    {% if detail.input_rows %}<div class="table-wrap"><table class="readable-detail-table"><thead><tr><th>Field</th><th>Your Value</th></tr></thead><tbody>{% for item in detail.input_rows %}<tr><td>{{ item.label }}</td><td><strong>{{ item.value }}</strong></td></tr>{% endfor %}</tbody></table></div>{% else %}<p class="muted">No separate input fields were stored for this record.</p>{% endif %}
+  </section>
+  <section class="card">
+    <div class="card-title-row"><div><span class="eyebrow">OUTPUT</span><h2>Result Summary</h2></div></div>
+    {% if detail.result_rows %}<div class="table-wrap"><table class="readable-detail-table"><thead><tr><th>Measure</th><th>Easy Explanation</th></tr></thead><tbody>{% for item in detail.result_rows %}<tr><td>{{ item.label }}</td><td>{{ item.value }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<p class="muted">No result details are available.</p>{% endif %}
+  </section>
+</div>
+
+{% if detail.technical_rows %}
+<details class="card section technical-details"><summary>View technical model details</summary><div class="table-wrap"><table class="readable-detail-table"><tbody>{% for item in detail.technical_rows %}<tr><td>{{ item.label }}</td><td>{{ item.value }}</td></tr>{% endfor %}</tbody></table></div></details>
+{% endif %}
+
+<div class="actions"><a class="btn primary" href="{{ url_for('analysis_pdf', analysis_id=row.id) }}">Download Simple PDF Report</a><a class="btn ghost" href="{{ url_for('history') }}">History</a></div>
+<form method="post" action="{{ url_for('history_delete', analysis_id=row.id) }}" class="actions" onsubmit="return confirm('Delete this saved analysis?')"><input type="hidden" name="_csrf_token" value="{{ csrf_token() }}"><button class="btn danger-btn" type="submit">Delete Record</button></form>
+{% endblock %}

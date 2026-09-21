@@ -1,0 +1,907 @@
+{% extends "base.html" %}
+
+{% block title %}
+FinanceAI · Intelligent Financial Analytics
+{% endblock %}
+
+{% block content %}
+
+<!-- =====================================================
+     HERO SECTION
+===================================================== -->
+<section class="finance-hero">
+
+    <!-- LEFT CONTENT -->
+    <div class="finance-hero-content">
+
+        <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            AI-Powered Financial Analytics Platform
+        </div>
+
+        <h1>
+            Smarter financial insights.
+            <span>Clearer decisions.</span>
+        </h1>
+
+        <p class="hero-description">
+            FinanceAI transforms financial data into explainable
+            health scores, personalized recommendations and
+            experimental machine-learning risk insights —
+            all inside one secure Flask application.
+        </p>
+
+        <div class="hero-actions">
+
+            {% if current_user %}
+
+                <a
+                    href="{{ url_for('dashboard') }}"
+                    class="finance-btn finance-btn-primary"
+                >
+                    Open Dashboard
+                    <span>→</span>
+                </a>
+
+                <a
+                    href="{{ url_for('history') }}"
+                    class="finance-btn finance-btn-outline"
+                >
+                    View History
+                </a>
+
+            {% else %}
+
+                <a
+                    href="{{ url_for('register') }}"
+                    class="finance-btn finance-btn-primary"
+                >
+                    Start Free Demo
+                    <span>→</span>
+                </a>
+
+                <a
+                    href="{{ url_for('login') }}"
+                    class="finance-btn finance-btn-outline"
+                >
+                    Login
+                </a>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- HERO MINI FEATURES -->
+        <div class="hero-mini-features">
+
+            <div>
+                <span class="mini-check">✓</span>
+                Explainable Analytics
+            </div>
+
+            <div>
+                <span class="mini-check">✓</span>
+                Secure Authentication
+            </div>
+
+            <div>
+                <span class="mini-check">✓</span>
+                ML Risk Analysis
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+    <div class="finance-hero-visual">
+
+        <div class="hero-glow"></div>
+
+
+        <div class="hero-logo-box">
+
+            <img
+                src="{{ url_for('static', filename='img/financeai-logo.png') }}"
+                alt="FinanceAI Logo"
+                class="hero-main-logo"
+            >
+
+        </div>
+
+
+        <div class="system-online">
+
+            <span class="online-dot"></span>
+
+            FinanceAI System
+
+            <strong>
+                Online
+            </strong>
+
+        </div>
+
+
+        <!-- FLOATING CARD 1 -->
+        <div class="floating-card floating-health">
+
+            <div class="floating-icon">
+                100
+            </div>
+
+            <div>
+                <small>
+                    Financial Health
+                </small>
+
+                <strong>
+                    Explainable Score
+                </strong>
+            </div>
+
+        </div>
+
+
+        <!-- FLOATING CARD 2 -->
+        <div class="floating-card floating-ai">
+
+            <div class="floating-icon">
+                AI
+            </div>
+
+            <div>
+                <small>
+                    ML Analysis
+                </small>
+
+                <strong>
+                    Responsible Insights
+                </strong>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     QUICK STATS
+===================================================== -->
+
+<section class="finance-stats">
+
+    <div class="finance-stat">
+
+        <strong>
+            3
+        </strong>
+
+        <span>
+            Finance Modules
+        </span>
+
+    </div>
+
+
+    <div class="finance-stat">
+
+        <strong>
+            0–100
+        </strong>
+
+        <span>
+            Health Score
+        </span>
+
+    </div>
+
+
+    <div class="finance-stat">
+
+        <strong>
+            2
+        </strong>
+
+        <span>
+            ML Models
+        </span>
+
+    </div>
+
+
+    <div class="finance-stat">
+
+        <strong>
+            REST
+        </strong>
+
+        <span>
+            API Support
+        </span>
+
+    </div>
+
+
+    <div class="finance-stat">
+
+        <strong>
+            SQL
+        </strong>
+
+        <span>
+            SQLite / MySQL
+        </span>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     CORE MODULES
+===================================================== -->
+
+<section class="finance-section">
+
+    <div class="finance-section-heading">
+
+        <span class="finance-eyebrow">
+            CORE MODULES
+        </span>
+
+        <h2>
+            One platform.
+            <span>A complete finance workspace.</span>
+        </h2>
+
+        <p>
+            FinanceAI combines day-to-day money management, explainable financial-health analysis, personalized forecasting and experimental machine-learning risk models.
+        </p>
+
+    </div>
+
+
+    <div class="finance-module-grid">
+
+
+        <!-- PERSONAL FINANCE -->
+
+        <article class="finance-module-card featured-module">
+
+            <div class="module-top">
+
+                <span class="module-number">
+                    01
+                </span>
+
+                <span class="module-status primary-status">
+                    Primary Module
+                </span>
+
+            </div>
+
+
+            <div class="module-icon">
+                ₹
+            </div>
+
+
+            <h3>
+                Personal Finance
+            </h3>
+
+
+            <p>
+                Transform income, expenses, debt, emergency funds,
+                savings, investment and credit indicators into an
+                explainable financial-health score.
+            </p>
+
+
+            <div class="module-features">
+
+                <span>
+                    ✓ 0–100 Health Score
+                </span>
+
+                <span>
+                    ✓ Personalized Recommendations
+                </span>
+
+                <span>
+                    ✓ Component Breakdown
+                </span>
+
+                <span>
+                    ✓ Analysis History
+                </span>
+
+            </div>
+
+
+            {% if current_user %}
+
+                <a
+                    href="{{ url_for('personal_finance') }}"
+                    class="module-link"
+                >
+                    Analyze Finance
+                    <span>→</span>
+                </a>
+
+            {% else %}
+
+                <a
+                    href="{{ url_for('register') }}"
+                    class="module-link"
+                >
+                    Try Module
+                    <span>→</span>
+                </a>
+
+            {% endif %}
+
+        </article>
+
+
+
+        <!-- CREDIT STRESS -->
+
+        <article class="finance-module-card">
+
+            <div class="module-top">
+
+                <span class="module-number">
+                    02
+                </span>
+
+                <span class="module-status experimental-status">
+                    Experimental
+                </span>
+
+            </div>
+
+
+            <div class="module-icon">
+                CS
+            </div>
+
+
+            <h3>
+                Credit Stress
+            </h3>
+
+
+            <p>
+                Logistic Regression based experimental classification
+                for identifying association with a financial-stress
+                proxy target.
+            </p>
+
+
+            <div class="module-features">
+
+                <span>
+                    ✓ Logistic Regression
+                </span>
+
+                <span>
+                    ✓ Leakage-Safe Features
+                </span>
+
+                <span>
+                    ✓ Tuned Threshold
+                </span>
+
+                <span>
+                    ✓ Explainable Output
+                </span>
+
+            </div>
+
+
+            {% if current_user %}
+
+                <a
+                    href="{{ url_for('credit_stress') }}"
+                    class="module-link"
+                >
+                    Open Credit Stress
+                    <span>→</span>
+                </a>
+
+            {% else %}
+
+                <a
+                    href="{{ url_for('register') }}"
+                    class="module-link"
+                >
+                    Explore Module
+                    <span>→</span>
+                </a>
+
+            {% endif %}
+
+        </article>
+
+
+
+        <!-- LOAN RISK -->
+
+        <article class="finance-module-card">
+
+            <div class="module-top">
+
+                <span class="module-number">
+                    03
+                </span>
+
+                <span class="module-status experimental-status">
+                    Experimental
+                </span>
+
+            </div>
+
+
+            <div class="module-icon">
+                LR
+            </div>
+
+
+            <h3>
+                Loan Risk
+            </h3>
+
+
+            <p>
+                Extra Trees based experimental risk-ranking model
+                designed around application-time borrower and
+                credit-related information.
+            </p>
+
+
+            <div class="module-features">
+
+                <span>
+                    ✓ Extra Trees
+                </span>
+
+                <span>
+                    ✓ Risk Ranking
+                </span>
+
+                <span>
+                    ✓ Input Validation
+                </span>
+
+                <span>
+                    ✓ Threshold Analysis
+                </span>
+
+            </div>
+
+
+            {% if current_user %}
+
+                <a
+                    href="{{ url_for('loan_risk') }}"
+                    class="module-link"
+                >
+                    Open Loan Risk
+                    <span>→</span>
+                </a>
+
+            {% else %}
+
+                <a
+                    href="{{ url_for('register') }}"
+                    class="module-link"
+                >
+                    Explore Module
+                    <span>→</span>
+                </a>
+
+            {% endif %}
+
+        </article>
+
+    </div>
+
+</section>
+
+<section class="finance-section">
+  <div class="finance-section-heading">
+    <span class="finance-eyebrow">FINANCEAI 2.0 TOOLKIT</span>
+    <h2>From daily transactions to <span>future planning.</span></h2>
+    <p>The upgraded workspace turns your own ledger into budgets, goals, forecasts, anomaly reviews, net-worth tracking and grounded AI explanations.</p>
+  </div>
+  <div class="grid three">
+    <article class="card module-card"><span class="module-tag">LEDGER + CSV</span><h3>Transactions</h3><p>Income and expense tracking with CSV import/export and synthetic demo data.</p>{% if current_user %}<a class="arrow" href="{{ url_for('transactions') }}">Open →</a>{% endif %}</article>
+    <article class="card module-card"><span class="module-tag">50/30/20</span><h3>Budget Planner</h3><p>Category limits, actual-vs-budget status and a flexible 50/30/20 baseline.</p>{% if current_user %}<a class="arrow" href="{{ url_for('budget') }}">Plan →</a>{% endif %}</article>
+    <article class="card module-card"><span class="module-tag">GOALS</span><h3>Savings Goals</h3><p>Track progress, remaining amount, time left and required monthly contribution.</p>{% if current_user %}<a class="arrow" href="{{ url_for('goals') }}">Track →</a>{% endif %}</article>
+    <article class="card module-card"><span class="module-tag">ML FORECAST</span><h3>30/60/90 Forecast</h3><p>Linear-regression cash-flow projection with a moving-average fallback for short histories.</p>{% if current_user %}<a class="arrow" href="{{ url_for('forecast') }}">Forecast →</a>{% endif %}</article>
+    <article class="card module-card"><span class="module-tag">ML INSIGHTS</span><h3>Behavior & Anomalies</h3><p>K-Means spending groups and Isolation Forest unusual-spend detection.</p>{% if current_user %}<a class="arrow" href="{{ url_for('spending_insights') }}">Analyze →</a>{% endif %}</article>
+    <article class="card module-card"><span class="module-tag">RAG + WEALTH</span><h3>Assistant & Net Worth</h3><p>Local TF-IDF RAG explanations plus assets, investments and liabilities tracking.</p>{% if current_user %}<a class="arrow" href="{{ url_for('assistant') }}">Ask FinanceAI →</a>{% endif %}</article>
+  </div>
+</section>
+
+
+<!-- =====================================================
+     HOW FINANCEAI WORKS
+===================================================== -->
+
+<section class="finance-section workflow-section">
+
+    <div class="finance-section-heading">
+
+        <span class="finance-eyebrow">
+            HOW IT WORKS
+        </span>
+
+        <h2>
+            Financial insight in
+            <span>five simple steps.</span>
+        </h2>
+
+    </div>
+
+
+    <div class="finance-workflow">
+
+
+        <div class="workflow-card">
+
+            <div class="workflow-number">
+                01
+            </div>
+
+            <h3>
+                Create Account
+            </h3>
+
+            <p>
+                Register securely and access your
+                personalized FinanceAI dashboard.
+            </p>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <div class="workflow-card">
+
+            <div class="workflow-number">
+                02
+            </div>
+
+            <h3>
+                Enter Data
+            </h3>
+
+            <p>
+                Provide relevant personal-finance
+                or risk-analysis information.
+            </p>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <div class="workflow-card">
+
+            <div class="workflow-number">
+                03
+            </div>
+
+            <h3>
+                Analyze
+            </h3>
+
+            <p>
+                FinanceAI processes data using
+                scoring rules or ML pipelines.
+            </p>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <div class="workflow-card">
+
+            <div class="workflow-number">
+                04
+            </div>
+
+            <h3>
+                Get Insights
+            </h3>
+
+            <p>
+                View health scores, risk signals,
+                explanations and recommendations.
+            </p>
+
+        </div>
+
+
+        <div class="workflow-line"></div>
+
+
+        <div class="workflow-card">
+
+            <div class="workflow-number">
+                05
+            </div>
+
+            <h3>
+                Track History
+            </h3>
+
+            <p>
+                Review previous analyses from
+                your secure account history.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+
+<!-- =====================================================
+     TEAM
+===================================================== -->
+
+<section class="finance-section">
+
+    <div class="finance-section-heading">
+
+        <span class="finance-eyebrow">
+            PROJECT TEAM
+        </span>
+
+        <h2>
+            Meet the
+            <span>FinanceAI team.</span>
+        </h2>
+
+        <p>
+            A four-member B.Tech CSE team combining
+            full-stack development, analytics and machine learning.
+        </p>
+
+    </div>
+
+
+    <div class="finance-team-grid">
+
+
+        <article class="finance-team-card leader-card">
+
+            <div class="team-avatar team-avatar-photo">
+                <img
+                    src="{{ url_for('static', filename='team/ajit.png') }}"
+                    alt="Ajit Kumar"
+                    loading="lazy"
+                    onerror="this.hidden=true; this.nextElementSibling.hidden=false;"
+                >
+                <span class="team-avatar-fallback" hidden>AK</span>
+            </div>
+
+            <span class="team-role-highlight">
+                TEAM LEADER
+            </span>
+
+            <h3>
+                Ajit Kumar
+            </h3>
+
+            <p>
+                Full-Stack Development,
+                Architecture & Integration
+            </p>
+
+        </article>
+
+
+        <article class="finance-team-card">
+
+            <div class="team-avatar team-avatar-photo">
+                <img
+                    src="{{ url_for('static', filename='team/ajeet.png') }}"
+                    alt="Ajeet Kumar"
+                    loading="lazy"
+                    onerror="this.hidden=true; this.nextElementSibling.hidden=false;"
+                >
+                <span class="team-avatar-fallback" hidden>AJ</span>
+            </div>
+
+            <span class="team-role">
+                TEAM MEMBER
+            </span>
+
+            <h3>
+                Ajeet Kumar
+            </h3>
+
+            <p>
+                Personal Finance &
+                Data Analytics
+            </p>
+
+        </article>
+
+
+        <article class="finance-team-card">
+
+            <div class="team-avatar team-avatar-photo">
+                <img
+                    src="{{ url_for('static', filename='team/sonu.png') }}"
+                    alt="Sonu Kumar"
+                    loading="lazy"
+                    onerror="this.hidden=true; this.nextElementSibling.hidden=false;"
+                >
+                <span class="team-avatar-fallback" hidden>SK</span>
+            </div>
+
+            <span class="team-role">
+                TEAM MEMBER
+            </span>
+
+            <h3>
+                Sonu Kumar
+            </h3>
+
+            <p>
+                Credit Stress ML &
+                Explainability
+            </p>
+
+        </article>
+
+
+        <article class="finance-team-card">
+
+            <div class="team-avatar team-avatar-photo">
+                <img
+                    src="{{ url_for('static', filename='team/pranav.png') }}"
+                    alt="Pranav Kr Mishra"
+                    loading="lazy"
+                    onerror="this.hidden=true; this.nextElementSibling.hidden=false;"
+                >
+                <span class="team-avatar-fallback" hidden>PM</span>
+            </div>
+
+            <span class="team-role">
+                TEAM MEMBER
+            </span>
+
+            <h3>
+                Pranav Kr Mishra
+            </h3>
+
+            <p>
+                Loan Risk,
+                Testing & Documentation
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     RESPONSIBLE AI
+===================================================== -->
+
+<section class="responsible-section">
+
+    <div class="responsible-icon">
+        !
+    </div>
+
+
+    <div>
+
+        <span class="finance-eyebrow">
+            RESPONSIBLE USE
+        </span>
+
+        <h3>
+            Analytics with honest boundaries.
+        </h3>
+
+        <p>
+            FinanceAI does not approve or reject loans
+            or credit products. Credit Stress and Loan Risk
+            outputs are experimental research/demo signals.
+            Personal Finance guidance is educational and
+            is not professional financial advice.
+        </p>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FINAL CTA
+===================================================== -->
+
+<section class="finance-final-cta">
+
+    <div class="cta-glow"></div>
+
+    <span class="finance-eyebrow">
+        READY TO EXPLORE?
+    </span>
+
+    <h2>
+        Understand your financial health
+        with <span>FinanceAI.</span>
+    </h2>
+
+    <p>
+        Explore transparent finance scoring,
+        personalized recommendations and
+        responsible machine-learning analysis.
+    </p>
+
+
+    <div class="hero-actions">
+
+        {% if current_user %}
+
+            <a
+                href="{{ url_for('dashboard') }}"
+                class="finance-btn finance-btn-primary"
+            >
+                Open Dashboard
+                <span>→</span>
+            </a>
+
+        {% else %}
+
+            <a
+                href="{{ url_for('register') }}"
+                class="finance-btn finance-btn-primary"
+            >
+                Start Free Demo
+                <span>→</span>
+            </a>
+
+            <a
+                href="{{ url_for('about') }}"
+                class="finance-btn finance-btn-outline"
+            >
+                Explore Project
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

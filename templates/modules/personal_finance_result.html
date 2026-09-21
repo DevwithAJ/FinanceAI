@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Health Result · FinanceAI{% endblock %}
+{% block content %}
+<section class="result-hero">
+  <div><span class="eyebrow">FINANCIAL HEALTH RESULT</span><h1>{{ health.financial_health_score }}/100</h1><p class="result-label">{{ health.financial_health_level }}</p></div>
+  <div class="gauge"><div class="gauge-fill" style="--score: {{ health.financial_health_score }}%"></div><span>{{ health.financial_health_score }}%</span></div>
+</section>
+
+<div class="grid three">
+{% for name, score in health.components.items() %}
+<article class="card metric-card"><span>{{ name }}</span><strong>{{ score }}</strong></article>
+{% endfor %}
+</div>
+
+<div class="grid two section">
+  <article class="card"><h2>Key Ratios</h2>
+    <div class="metric-row"><span>Expense / Income</span><strong>{{ "%.1f%%"|format(health.expense_to_income_ratio*100) }}</strong></div>
+    <div class="metric-row"><span>Loan / Income</span><strong>{{ "%.1f%%"|format(health.loan_to_income_ratio*100) }}</strong></div>
+    <div class="metric-row"><span>Investment / Income</span><strong>{{ "%.1f%%"|format(health.investment_to_income_ratio*100) }}</strong></div>
+    <div class="metric-row"><span>Emergency Fund</span><strong>{{ health.emergency_fund_months }} months</strong></div>
+    <div class="metric-row"><span>Savings Goal Progress</span><strong>{{ "%.1f%%"|format(health.goal_progress_ratio*100) }}</strong></div>
+  </article>
+  <article class="card"><h2>Priority Recommendations</h2>
+    {% for r in recommendations %}<div class="recommendation"><span>{{ loop.index }}</span><div><strong>{{ r.category }}</strong><p>{{ r.message }}</p></div></div>{% endfor %}
+  </article>
+</div>
+<div class="notice">{{ health.disclaimer }}</div>
+<div class="actions">
+  <a class="btn ghost" href="{{ url_for('personal_finance') }}">Analyze Again</a>
+  <a class="btn ghost" href="{{ url_for('analysis_pdf', analysis_id=analysis_id) }}">Download PDF Report</a>
+  <a class="btn primary" href="{{ url_for('history_detail', analysis_id=analysis_id) }}">View Saved Record</a>
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}{% block title %}Transactions · FinanceAI{% endblock %}
+{% block content %}
+<section class="page-head"><div><span class="eyebrow">TRANSACTION LEDGER</span><h1>Income & Expenses</h1><p>Build the data foundation for budgets, forecasts and ML insights.</p></div><a class="btn ghost" href="{{ url_for('transactions_export') }}">Export CSV</a></section>
+<div class="grid four metrics-grid">
+<article class="card metric-card"><span>{{ month }} Income</span><strong>₹{{ '%.0f'|format(totals.income) }}</strong></article>
+<article class="card metric-card"><span>Expenses</span><strong>₹{{ '%.0f'|format(totals.expense) }}</strong></article>
+<article class="card metric-card"><span>Balance</span><strong>₹{{ '%.0f'|format(totals.balance) }}</strong></article>
+<article class="card metric-card"><span>Savings Rate</span><strong>{{ '%.1f'|format(totals.savings_rate) }}%</strong></article>
+</div>
+<div class="grid two section">
+<section class="card form-card"><span class="eyebrow">ADD</span><h2>New Transaction</h2>
+<form method="post" class="form-stack" id="transactionForm"><input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+<label>Type<select name="transaction_type" id="transactionType" required><option value="expense">Expense</option><option value="income">Income</option></select></label>
+<label>Amount (₹)<input type="number" name="amount" min="0.01" step="0.01" required></label>
+<label>Category<select name="category" id="transactionCategory" required>
+{% for c in expense_categories %}<option data-kind="expense" value="{{ c }}">{{ c }}</option>{% endfor %}
+{% for c in income_categories %}<option data-kind="income" value="{{ c }}">{{ c }}</option>{% endfor %}
+</select></label>
+<label>Date<input type="date" name="transaction_date" value="{{ today }}" required></label>
+<label>Payment Method<select name="payment_method">{% for p in payment_methods %}<option>{{ p }}</option>{% endfor %}</select></label>
+<label>Description<input name="description" maxlength="255" placeholder="Optional note"></label>
+<label class="check-row"><input type="checkbox" name="is_recurring" value="1"> Recurring transaction</label>
+<button class="btn primary" type="submit">Add Transaction</button></form></section>
+<section class="card"><span class="eyebrow">DATA TOOLS</span><h2>Import or Demo</h2><p>CSV columns supported: <code>date,type,category,amount,description,payment_method,recurring</code>.</p>
+<form method="post" action="{{ url_for('transactions_import') }}" enctype="multipart/form-data" class="form-stack"><input type="hidden" name="_csrf_token" value="{{ csrf_token() }}"><label>CSV file<input type="file" name="file" accept=".csv,text/csv" required></label><button class="btn ghost">Import CSV</button></form>
+<hr class="soft-line"><form method="post" action="{{ url_for('transactions_demo') }}"><input type="hidden" name="_csrf_token" value="{{ csrf_token() }}"><button class="btn ghost">Load 6 Months Demo Data</button></form>
+<div class="notice">Demo data is synthetic and intended for presentation/testing.</div></section>
+</div>
+<section class="card section"><div class="card-title-row"><div><span class="eyebrow">LEDGER</span><h2>Recent Transactions</h2></div><span class="badge success">{{ rows|length }} shown</span></div>
+{% if rows %}<div class="table-wrap"><table><thead><tr><th>Date</th><th>Type</th><th>Category</th><th>Description</th><th>Amount</th><th>Action</th></tr></thead><tbody>{% for r in rows %}<tr><td>{{ r.transaction_date }}</td><td><span class="badge {{ 'success' if r.transaction_type=='income' else 'warning' }}">{{ r.transaction_type }}</span></td><td>{{ r.category }}</td><td>{{ r.description or '—' }}</td><td>₹{{ '%.2f'|format(r.amount|float) }}</td><td><a class="text-link" href="{{ url_for('transaction_edit', transaction_id=r.id) }}">Edit</a> &nbsp; <form class="inline-form" method="post" action="{{ url_for('transaction_delete', transaction_id=r.id) }}"><input type="hidden" name="_csrf_token" value="{{ csrf_token() }}"><button class="mini-danger" type="submit">Delete</button></form></td></tr>{% endfor %}</tbody></table></div>{% else %}<p class="muted">No transactions yet.</p>{% endif %}</section>
+{% endblock %}

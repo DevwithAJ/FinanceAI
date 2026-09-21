@@ -1,0 +1,23 @@
+{
+  "module": "Loan Risk",
+  "step": 6,
+  "selection_metric": "PR-AUC",
+  "selection_source": "5-fold stratified CV on Jan-Feb training only",
+  "final_holdout": "March 2018",
+  "champion_model": "Extra Trees",
+  "cv_pr_auc": 0.05903988857610891,
+  "test_positive_prevalence": 0.013547138512579486,
+  "test_metrics": {
+    "Accuracy": 0.9864528614874205,
+    "Balanced Accuracy": 0.5,
+    "Precision": 0.0,
+    "Recall": 0.0,
+    "F1": 0.0,
+    "ROC-AUC": 0.6487199139745584,
+    "PR-AUC": 0.032607298091303444,
+    "MCC": 0.0
+  },
+  "default_threshold": 0.5,
+  "test_used_for_model_selection": false,
+  "production_ready": false
+}

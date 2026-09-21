@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}{{ view.title }} · FinanceAI{% endblock %}
+{% block content %}
+<section class="simple-result-hero risk-{{ view.tone }}">
+  <div>
+    <span class="eyebrow">ANALYSIS COMPLETE</span>
+    <div class="result-level-row">
+      <span class="risk-pill {{ view.tone }}">{{ view.level }}</span>
+      <span class="muted">Educational model signal</span>
+    </div>
+    <h1>{{ view.headline }}</h1>
+    <p class="lead">{{ view.meaning }}</p>
+  </div>
+  <div class="simple-score-card">
+    <span>{{ view.score_label }}</span>
+    <strong>{{ view.score_display }}</strong>
+    <small>Model score shown on a 0–100 display scale</small>
+  </div>
+</section>
+
+<div class="notice warning-notice">
+  <strong>Important:</strong> {{ view.warning }} This score is not a bank credit score, approval decision, rejection decision, or guaranteed probability.
+</div>
+
+{% if view.insights %}
+<section class="card section">
+  <div class="card-title-row">
+    <div><span class="eyebrow">YOUR PROFILE</span><h2>What your inputs show</h2></div>
+  </div>
+  <p class="muted">These are easy-to-understand checks from the information you entered. They are planning observations, not a claim that any one field caused the model result.</p>
+  <div class="table-wrap">
+    <table class="readable-detail-table insight-table">
+      <thead><tr><th>Factor</th><th>Your Value</th><th>What It Means</th></tr></thead>
+      <tbody>
+        {% for item in view.insights %}
+        <tr>
+          <td><strong>{{ item.factor }}</strong></td>
+          <td><span class="risk-dot {{ item.tone }}"></span>{{ item.value }}</td>
+          <td>{{ item.meaning }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endif %}
+
+{% if view.recommendations %}
+<section class="card section">
+  <div class="card-title-row"><div><span class="eyebrow">NEXT STEPS</span><h2>What you can do</h2></div></div>
+  <div class="friendly-recommendations">
+    {% for rec in view.recommendations %}
+    <div class="friendly-rec"><span>{{ loop.index }}</span><p>{{ rec }}</p></div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<details class="card section technical-details">
+  <summary>View technical model details</summary>
+  <p class="muted">These values are useful for project demonstration and debugging. Normal users do not need them to understand the result.</p>
+  <div class="table-wrap">
+    <table class="readable-detail-table"><tbody>
+      {% for item in view.technical_rows %}<tr><td>{{ item.label }}</td><td>{{ item.value }}</td></tr>{% endfor %}
+    </tbody></table>
+  </div>
+</details>
+
+<div class="actions">
+  <a class="btn primary" href="{{ url_for('analysis_pdf', analysis_id=analysis_id) }}">Download Simple PDF Report</a>
+  <a class="btn ghost" href="{{ url_for('history_detail', analysis_id=analysis_id) }}">View Saved Record</a>
+  <a class="btn ghost" href="{{ url_for('dashboard') }}">Dashboard</a>
+</div>
+{% endblock %}

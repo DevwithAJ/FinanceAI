@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% block title %}FinanceAI{% endblock %}</title>
+
+  <meta
+    name="description"
+    content="FinanceAI personal finance, credit stress, and experimental loan risk analytics."
+  >
+
+  <!-- Favicon -->
+  <link
+    rel="icon"
+    type="image/png"
+    href="{{ url_for('static', filename='img/financeai-logo.png') }}"
+  >
+
+  <!-- Main CSS -->
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/style.css') }}"
+  >
+</head>
+
+<body>
+  <!-- =========================================
+     FINANCEAI SMART SPLASH SCREEN
+========================================= -->
+{% if request.endpoint == 'home' %}
+<div id="financeSplash" class="finance-splash" aria-hidden="true">
+
+    <div class="splash-content">
+
+        <div class="splash-logo-wrap">
+            <div class="splash-ring"></div>
+            <div class="splash-ring splash-ring-secondary"></div>
+
+            <img
+                src="{{ url_for('static', filename='img/financeai-logo.png') }}"
+                alt="FinanceAI Logo"
+                class="splash-logo"
+            >
+        </div>
+
+        <h1 class="splash-brand">
+            Finance<span>AI</span>
+        </h1>
+
+        <p class="splash-text">
+            Intelligent Personal Finance & Risk Analysis System
+        </p>
+
+        <div class="splash-progress" aria-hidden="true">
+            <div class="splash-progress-bar"></div>
+        </div>
+
+        <div class="splash-status">
+            <span class="splash-status-dot"></span>
+            <span id="splashStatusText">Initializing FinanceAI...</span>
+        </div>
+
+    </div>
+</div>
+{% endif %}
+
+<!-- =========================
+     NAVBAR
+========================= -->
+<header class="topbar">
+
+  <!-- Brand -->
+  <a class="brand" href="{{ url_for('home') }}">
+
+    <img
+      src="{{ url_for('static', filename='img/financeai-logo.png') }}"
+      alt="FinanceAI Logo"
+      class="brand-logo"
+    >
+<span class="brand-name">
+    Finance<span class="brand-ai">AI</span>
+</span>
+
+  </a>
+
+  <!-- Navigation -->
+  <nav>
+
+    <a href="{{ url_for('home') }}">
+      Home
+    </a>
+
+    {% if current_user %}
+
+      <a href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('transactions') }}">Transactions</a>
+      <a href="{{ url_for('budget') }}">Budget</a>
+      <a href="{{ url_for('goals') }}">Goals</a>
+      <a href="{{ url_for('what_if_simulator') }}">What-If</a>
+      <a href="{{ url_for('emergency_fund') }}">Emergency Fund</a>
+      <a href="{{ url_for('assistant') }}">Assistant</a>
+      <a href="{{ url_for('history') }}">History</a>
+
+      <a href="{{ url_for('profile') }}">
+        Profile
+      </a>
+
+      <form
+        method="post"
+        action="{{ url_for('logout') }}"
+        class="inline-form"
+      >
+        <input
+          type="hidden"
+          name="_csrf_token"
+          value="{{ csrf_token() }}"
+        >
+
+        <button
+          class="nav-button"
+          type="submit"
+        >
+          Logout
+        </button>
+
+      </form>
+
+    {% else %}
+
+      <a href="{{ url_for('about') }}">
+        About
+      </a>
+
+      <a href="{{ url_for('login') }}">
+        Login
+      </a>
+
+      <a
+        class="nav-cta"
+        href="{{ url_for('register') }}"
+      >
+        Create Account
+      </a>
+
+    {% endif %}
+
+  </nav>
+
+</header>
+
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+<main class="container">
+
+  <!-- Flask notifications -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="toast-container" aria-live="polite" aria-atomic="true">
+        {% for category, message in messages %}
+          <div class="finance-toast {{ category }}" role="status">
+            <span class="toast-icon" aria-hidden="true">
+              {% if category == 'success' %}✓{% elif category == 'danger' %}×{% elif category == 'warning' %}!{% else %}i{% endif %}
+            </span>
+            <span class="toast-message">{{ message }}</span>
+            <button class="toast-close" type="button" aria-label="Dismiss notification">×</button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+
+  {% block content %}
+  {% endblock %}
+
+</main>
+
+<!-- =========================================================
+     ANALYSIS PROCESSING OVERLAY
+========================================================= -->
+<div id="analysisLoader" class="analysis-loader" aria-hidden="true">
+    <div class="analysis-loader-card" role="status" aria-live="polite">
+        <div class="analysis-loader-logo-wrap">
+            <div class="analysis-loader-ring"></div>
+            <img
+                src="{{ url_for('static', filename='img/financeai-logo.png') }}"
+                alt=""
+                class="analysis-loader-logo"
+            >
+        </div>
+
+        <span class="finance-eyebrow">FINANCEAI ENGINE</span>
+        <h2>Analyzing your data<span class="loader-dots">...</span></h2>
+        <p id="analysisLoaderText">Validating inputs and preparing your analysis.</p>
+
+        <div class="analysis-loader-progress">
+            <span></span>
+        </div>
+
+        <small>Please keep this page open while FinanceAI processes the request.</small>
+    </div>
+</div>
+
+<!-- =========================================================
+     FINANCEAI PROFESSIONAL FOOTER
+========================================================= -->
+
+<footer class="site-footer">
+
+    <!-- Background Glow -->
+    <div class="footer-glow footer-glow-left"></div>
+    <div class="footer-glow footer-glow-right"></div>
+
+
+    <div class="footer-container">
+
+
+        <!-- =================================================
+             BRAND
+        ================================================== -->
+
+        <div class="footer-brand">
+
+            <a href="{{ url_for('home') }}" class="footer-brand-top">
+
+                <img
+                    src="{{ url_for('static', filename='img/financeai-logo.png') }}"
+                    alt="FinanceAI Logo"
+                    class="footer-logo"
+                >
+
+                <div class="footer-brand-content">
+
+                    <h3>
+                        Finance<span class="footer-ai">AI</span>
+                    </h3>
+
+                    <p class="footer-tagline">
+                        Intelligent Personal Finance & Risk Analysis System
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <p class="footer-description">
+                A Flask-based financial analytics platform providing
+                explainable personal finance insights, credit stress
+                analysis and experimental machine-learning based loan
+                risk analysis.
+            </p>
+
+
+            <!-- Technology Badges -->
+
+            <div class="footer-badges">
+
+                <span>Python</span>
+                <span>Flask</span>
+                <span>Machine Learning</span>
+                <span>Finance Analytics</span>
+
+            </div>
+
+
+            <!-- System Status -->
+
+            <div class="footer-project-status">
+
+                <span class="footer-status-dot"></span>
+
+                <span>
+                    FinanceAI System
+                </span>
+
+                <strong>
+                    Online
+                </strong>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             QUICK LINKS
+        ================================================== -->
+
+        <div class="footer-column">
+
+            <h4>Quick Links</h4>
+
+            <div class="footer-links">
+
+                <a href="{{ url_for('home') }}">
+                    <span>›</span>
+                    Home
+                </a>
+
+                <a href="{{ url_for('about') }}">
+                    <span>›</span>
+                    About Project
+                </a>
+
+
+                {% if current_user %}
+
+                    <a href="{{ url_for('dashboard') }}">
+                        <span>›</span>
+                        Dashboard
+                    </a>
+
+                    <a href="{{ url_for('history') }}">
+                        <span>›</span>
+                        Analysis History
+                    </a>
+
+                    <a href="{{ url_for('assistant') }}">
+                        <span>›</span>
+                        FinanceAI Assistant
+                    </a>
+
+                {% else %}
+
+                    <a href="{{ url_for('login') }}">
+                        <span>›</span>
+                        Login
+                    </a>
+
+                    <a href="{{ url_for('register') }}">
+                        <span>›</span>
+                        Create Account
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             RESOURCES
+        ================================================== -->
+
+        <div class="footer-column">
+
+            <h4>Resources</h4>
+
+            <div class="footer-links">
+
+                <a
+                    href="https://github.com/DevwithAJ/FinanceAI"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span>›</span>
+                    GitHub Repository
+                </a>
+
+
+                <a href="mailto:ajitkumar09112005@gmail.com">
+                    <span>›</span>
+                    Contact Team
+                </a>
+
+
+                <a href="{{ url_for('privacy') }}">
+                    <span>›</span>
+                    Privacy Policy
+                </a>
+
+
+                <a href="{{ url_for('terms') }}">
+                    <span>›</span>
+                    Terms & Disclaimer
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             PROJECT INFORMATION
+        ================================================== -->
+
+        <div class="footer-column footer-info">
+
+            <h4>Project Information</h4>
+
+            <div class="footer-info-item">
+                <span class="footer-info-label">Team Leader</span>
+                <strong>Ajit Kumar</strong>
+            </div>
+
+            <div class="footer-info-item">
+                <span class="footer-info-label">Team Members</span>
+                <p>Ajeet Kumar · Sonu Kumar · Pranav Kr Mishra</p>
+            </div>
+
+            <!-- Technology -->
+
+            <div class="footer-info-item">
+
+                <span class="footer-info-label">
+                    Technology
+                </span>
+
+                <p>
+                    Python · Flask · Machine Learning
+                </p>
+
+            </div>
+
+
+            <!-- Database -->
+
+            <div class="footer-info-item">
+
+                <span class="footer-info-label">
+                    Database
+                </span>
+
+                <p>
+                    SQLite / MySQL
+                </p>
+
+            </div>
+
+
+            <!-- Version -->
+
+            <div class="footer-info-item">
+
+                <span class="footer-info-label">
+                    Version
+                </span>
+
+                <p>
+                    FinanceAI v1.1.0
+                </p>
+
+            </div>
+
+
+            <!-- Project Type -->
+
+            <div class="footer-info-item">
+
+                <span class="footer-info-label">
+                    Project Type
+                </span>
+
+                <p>
+                    Academic · Research · ML Demo
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         DIVIDER
+    ================================================== -->
+
+    <div class="footer-divider"></div>
+
+
+<!-- =================================================
+     BOTTOM FOOTER
+================================================== -->
+
+<div class="footer-bottom">
+
+    <!-- Technology -->
+    <div class="footer-bottom-left">
+
+        <span>
+            Built with
+        </span>
+
+        <strong>
+            Python · Flask · ML
+        </strong>
+
+    </div>
+
+
+    <!-- Copyright -->
+    <div class="footer-bottom-center">
+
+        <p class="footer-copyright">
+            © 2026
+
+            <strong>
+                Finance<span class="footer-ai">AI</span>
+            </strong>.
+
+            All rights reserved.
+        </p>
+
+    </div>
+
+
+    <!-- Credit -->
+    <div class="footer-credit">
+
+        Designed & Developed by
+
+        <strong>
+            FinanceAI Team
+        </strong>
+
+    </div>
+
+</div>
+
+
+</footer>
+
+<!-- Back to top -->
+<button id="backToTop" class="back-to-top" type="button" aria-label="Back to top">
+    <span aria-hidden="true">↑</span>
+    <span>Top</span>
+</button>
+
+<!-- Main JS -->
+<script
+  src="{{ url_for('static', filename='js/app.js') }}"
+></script>
+
+{% block scripts %}
+{% endblock %}
+
+
+
+</body>
+</html>

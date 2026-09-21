@@ -1,0 +1,13 @@
+{
+  "monthly_income": 50000,
+  "monthly_expense_total": 32000,
+  "debt_to_income_ratio": 0.28,
+  "loan_payment": 6000,
+  "investment_amount": 5000,
+  "emergency_fund": 90000,
+  "credit_score": 720,
+  "budget_goal": 15000,
+  "actual_savings": 18000,
+  "subscription_services": 4,
+  "financial_stress_level": "Medium"
+}

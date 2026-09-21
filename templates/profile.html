@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Profile · FinanceAI{% endblock %}
+{% block content %}
+<section class="page-head"><span class="eyebrow">PROFILE</span><h1>{{ user.full_name }}</h1><p>{{ user.email }} · Member since {{ user.created_at }}</p></section>
+<div class="grid two">
+  <article class="card"><h3>Account</h3><div class="metric-row"><span>Email</span><strong>{{ user.email }}</strong></div><div class="metric-row"><span>Last login</span><strong>{{ user.last_login or '—' }}</strong></div></article>
+  <article class="card"><h3>Change Password</h3><form method="post" class="form-stack"><input type="hidden" name="_csrf_token" value="{{ csrf_token() }}"><label>Current Password<input type="password" name="old_password" required></label><label>New Password<input type="password" name="new_password" minlength="8" required></label><label>Confirm<input type="password" name="confirm_password" minlength="8" required></label><button class="btn primary" type="submit">Update Password</button></form></article>
+</div>
+{% endblock %}

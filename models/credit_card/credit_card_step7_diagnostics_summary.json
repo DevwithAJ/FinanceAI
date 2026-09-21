@@ -1,0 +1,56 @@
+{
+  "module": "Credit Card",
+  "step": 7,
+  "champion_model": "Logistic Regression",
+  "target": "financial_stress_flag",
+  "target_type": "rule_based_financial_stress_proxy",
+  "actual_credit_default_label_available": false,
+  "default_threshold": 0.5,
+  "recommended_threshold": 0.6800000000000002,
+  "default_metrics": {
+    "Accuracy": 0.7655,
+    "Balanced Accuracy": 0.8151555826723611,
+    "Precision": 0.2099737532808399,
+    "Recall": 0.8727272727272727,
+    "F1": 0.3385049365303244,
+    "ROC-AUC": 0.8539118974984747,
+    "PR-AUC": 0.233387035017195,
+    "MCC": 0.35302564108274853
+  },
+  "tuned_metrics": {
+    "Accuracy": 0.8195,
+    "Balanced Accuracy": 0.8205735204392922,
+    "Precision": 0.25139043381535037,
+    "Recall": 0.8218181818181818,
+    "F1": 0.3850085178875639,
+    "ROC-AUC": 0.8539118974984747,
+    "PR-AUC": 0.233387035017195,
+    "MCC": 0.38864796555405245
+  },
+  "default_confusion_matrix": [
+    [
+      2822,
+      903
+    ],
+    [
+      35,
+      240
+    ]
+  ],
+  "tuned_confusion_matrix": [
+    [
+      3052,
+      673
+    ],
+    [
+      49,
+      226
+    ]
+  ],
+  "brier_score": 0.1573609434735624,
+  "test_prevalence": 0.06875,
+  "top_decile_positive_rate": 0.2625,
+  "top_decile_lift": 3.818181818181818,
+  "production_ready": false,
+  "production_ready_reason": "Target is a rule-based financial-stress proxy, not observed credit default/delinquency."
+}

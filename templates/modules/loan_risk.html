@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Loan Risk · FinanceAI{% endblock %}
+{% block content %}
+<section class="page-head"><span class="eyebrow warning-text">EXPERIMENTAL MODULE</span><h1>Loan Risk Research Analyzer</h1><p>Application-time historical risk ranking. The model was trained on 2018 loan data and is not validated for real lending decisions.</p></section>
+<div class="notice warning-notice"><strong>Research/demo only:</strong> Model reference year is {{ schema.reference_year }}. This result must not be used for automated loan approval or rejection.</div>
+
+<form method="post" class="loan-form finance-analysis-form" data-analysis-name="Loan Risk">
+  <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+  {% for group_name, fields in schema.form_groups %}
+  <section class="card form-card section">
+    <div class="card-title-row"><h2>{{ group_name }}</h2><span class="muted">Blank optional history fields are handled by the training preprocessing logic.</span></div>
+    <div class="form-grid">
+      {% for field in fields %}
+        {% set value = form.get(field) if form else (sample.get(field) if sample else '') %}
+        {% if field in schema.categorical_options %}
+          <label>{{ schema.field_labels.get(field, field.replace('_',' ')|title) }}
+            <select name="{{ field }}" required>
+              {% for option in schema.categorical_options[field] %}
+              <option value="{{ option }}" {% if value|string == option|string %}selected{% endif %}>
+                {% if field == 'state' %}{{ schema.state_labels.get(option, option) }} ({{ option }}){% else %}{{ option.replace('_',' ')|title }}{% endif %}
+              </option>
+              {% endfor %}
+            </select>
+            {% if field == 'state' %}<small class="field-help">Full U.S. state names are shown because the research model was trained on historical U.S. loan data.</small>{% endif %}
+          </label>
+        {% elif field == 'term' %}
+          <label>Term<select name="term"><option value="36" {% if value|string == '36' %}selected{% endif %}>36 months</option><option value="60" {% if value|string == '60' %}selected{% endif %}>60 months</option></select></label>
+        {% else %}
+          <label>{{ schema.field_labels.get(field, field.replace('_',' ')|title) }}
+            <input type="number" step="any" name="{{ field }}" value="{{ value if value is not none else '' }}"
+            {% if field in ['annual_income','earliest_credit_line','loan_amount','total_credit_limit'] %}required{% endif %}>
+          </label>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </section>
+  {% endfor %}
+  <div class="actions"><button class="btn primary" type="submit">Run Experimental Loan Analysis</button></div>
+</form>
+{% endblock %}

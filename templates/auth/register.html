@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Register · FinanceAI{% endblock %}
+{% block content %}
+<section class="auth-shell">
+  <div class="card auth-card">
+    <span class="eyebrow">CREATE ACCOUNT</span><h1>Start using FinanceAI</h1>
+    <form method="post" class="form-stack">
+      <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+      <label>Full Name<input name="full_name" required maxlength="120" value="{{ form.full_name if form else '' }}"></label>
+      <label>Email<input type="email" name="email" required value="{{ form.email if form else '' }}"></label>
+      <label>Password<input type="password" name="password" required minlength="8"></label>
+      <label>Confirm Password<input type="password" name="confirm_password" required minlength="8"></label>
+      <button class="btn primary full-btn" type="submit">Create Account</button>
+    </form>
+    <p class="muted center">Already have an account? <a class="text-link" href="{{ url_for('login') }}">Login</a></p>
+  </div>
+</section>
+{% endblock %}

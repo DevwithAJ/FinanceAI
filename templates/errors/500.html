@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Server Error · FinanceAI{% endblock %}
+{% block content %}
+<section class="error-shell">
+  <div class="error-code">500</div>
+  <span class="eyebrow">SYSTEM ERROR</span>
+  <h1>FinanceAI hit an unexpected error.</h1>
+  <p class="lead">The request could not be completed. Please return home and try again.</p>
+  <div class="actions"><a class="btn primary" href="{{ url_for('home') }}">Return Home</a></div>
+</section>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Assistant · FinanceAI 2.0{% endblock %}
+
+{% block content %}
+<section class="page-head assistant-page-head">
+    <div>
+        <span class="eyebrow">FINANCEAI LOCAL ASSISTANT</span>
+        <h1>Ask about your financial insights</h1>
+        <p>
+            FinanceAI uses your account summary, transparent finance rules and a
+            local TF-IDF RAG knowledge base to explain your finances in simple language.
+            No external AI API is required.
+        </p>
+    </div>
+</section>
+
+<section class="card chat-card assistant-card">
+    <div class="assistant-header">
+        <div class="assistant-profile">
+            <div class="assistant-avatar">AI</div>
+            <div>
+                <strong>FinanceAI Assistant</strong>
+                <span class="assistant-status"><i></i>Local RAG active · runs inside FinanceAI</span>
+            </div>
+        </div>
+
+        {% if messages %}
+        <form method="post" action="{{ url_for('assistant_clear') }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            <button class="assistant-clear-btn" type="submit" onclick="return confirm('Are you sure you want to clear the chat?');">Clear Chat</button>
+        </form>
+        {% endif %}
+    </div>
+
+    <div class="notice" style="margin-top:0;">
+        <strong>Local assistant enabled.</strong>
+        Answers are grounded in FinanceAI's built-in financial knowledge and your latest account summary. Internet/API access is not required.
+    </div>
+
+    <div class="chat-log" id="chatLog">
+        {% if messages %}
+            {% for m in messages %}
+            <div class="chat-row user-row">
+                <div class="bubble user">
+                    <div class="bubble-label">You</div>
+                    <p>{{ m.user_message }}</p>
+                </div>
+            </div>
+            <div class="chat-row bot-row">
+                <div class="assistant-mini-avatar">AI</div>
+                <div class="bubble bot">
+                    <div class="bubble-label">FinanceAI</div>
+                    <p style="white-space:pre-wrap;">{{ m.assistant_message }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="assistant-welcome">
+            <div class="assistant-welcome-icon">AI</div>
+            <h2>How can I help you?</h2>
+            <p>Ask about spending, budget, savings, goals, net worth, forecasts, anomalies, financial-health score, Credit Stress or Loan Risk.</p>
+            <div class="assistant-suggestions">
+                <button type="button" class="suggestion-chip" data-question="Mera financial health score simple Hindi me samjhao.">Explain my score</button>
+                <button type="button" class="suggestion-chip" data-question="Meri savings improve karne ke practical steps batao.">Improve savings</button>
+                <button type="button" class="suggestion-chip" data-question="Mere current month ke income aur expenses ka summary do.">Monthly summary</button>
+                <button type="button" class="suggestion-chip" data-question="Credit Stress model ko simple language me samjhao.">Explain Credit Stress</button>
+                <button type="button" class="suggestion-chip" data-question="Loan Risk result ka kya matlab hai?">Explain Loan Risk</button>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <form method="post" class="chat-form assistant-chat-form">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+        <div class="assistant-input-wrap">
+            <input id="assistantMessage" name="message" maxlength="800" autocomplete="off" placeholder="Ask FinanceAI in Hindi, Hinglish or English..." required>
+        </div>
+        <button class="btn primary assistant-send-btn" type="submit">Send <span>→</span></button>
+    </form>
+
+    <div class="assistant-disclaimer">
+        <span>ⓘ</span>
+        FinanceAI Assistant provides educational information only. Credit Stress and Loan Risk are experimental decision-support signals, not official credit scores or lending decisions.
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const input = document.getElementById("assistantMessage");
+    const chatLog = document.getElementById("chatLog");
+    document.querySelectorAll(".suggestion-chip").forEach(button => {
+        button.addEventListener("click", function () {
+            input.value = this.dataset.question;
+            input.focus();
+        });
+    });
+    if (chatLog) chatLog.scrollTop = chatLog.scrollHeight;
+});
+</script>
+{% endblock %}

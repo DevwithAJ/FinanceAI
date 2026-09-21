@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}History · FinanceAI{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div>
+    <span class="eyebrow">HISTORY</span>
+    <h1>Your Analysis History</h1>
+    <p>Every saved analysis is shown in simple language: what was checked, the level, the score, what it means, and when it was created.</p>
+  </div>
+  <a class="btn ghost" href="{{ url_for('history_export') }}">Export Readable CSV</a>
+</section>
+
+<section class="card section">
+  {% if rows %}
+  <div class="table-wrap">
+    <table class="history-table friendly-history-table">
+      <thead><tr><th>#</th><th>Analysis</th><th>Level / Result</th><th>Score</th><th>Simple Meaning</th><th>Date & Time</th><th></th></tr></thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          <td><strong>#{{ r.id }}</strong></td>
+          <td><strong>{{ r.title }}</strong></td>
+          <td><span class="risk-pill {{ r.tone }}">{{ r.result_display }}</span></td>
+          <td><strong>{{ r.score_display }}</strong></td>
+          <td class="history-meaning">{{ r.meaning }}</td>
+          <td>{{ r.date_display }}</td>
+          <td><a class="btn mini-btn ghost" href="{{ url_for('history_detail', analysis_id=r.id) }}">View Details</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state"><h3>No saved analysis yet</h3><p class="muted">Run Financial Health, Credit Stress, Loan Risk, or save a Forecast snapshot. Your results will appear here.</p></div>
+  {% endif %}
+</section>
+{% endblock %}

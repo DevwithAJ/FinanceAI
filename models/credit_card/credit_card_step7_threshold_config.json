@@ -1,0 +1,6 @@
+{
+  "selection_source": "5-fold OOF training predictions only",
+  "selection_metric": "F1",
+  "recommended_threshold": 0.6800000000000002,
+  "test_used_for_threshold_selection": false
+}

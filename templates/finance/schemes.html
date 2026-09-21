@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block title %}Government Schemes · FinanceAI{% endblock %}{% block content %}
+<section class="page-head"><div><span class="eyebrow">EDUCATIONAL DISCOVERY · INDIA</span><h1>Government-Linked Financial Schemes</h1><p>Use this page to discover categories worth researching. Always verify current eligibility, rates, premiums and rules on official sources before acting.</p></div></section>
+<div class="grid three">{% for s in schemes %}<article class="card module-card"><span class="module-tag">{{ s.type|upper }}</span><h3>{{ s.name }}</h3><p><strong>May fit:</strong> {{ s.fit }}</p><p class="muted">{{ s.note }}</p></article>{% endfor %}</div><div class="notice warning-notice">FinanceAI does not determine scheme eligibility and the app does not automatically update government terms.</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{
+  "module": "Credit Card",
+  "step": 6,
+  "target": "financial_stress_flag",
+  "target_type": "rule_based_financial_stress_proxy",
+  "actual_credit_default_label_available": false,
+  "strict_predictors": [
+    "Age",
+    "Dependents",
+    "Occupation",
+    "City_Tier",
+    "Desired_Savings_Percentage"
+  ],
+  "selection_metric": "PR-AUC",
+  "selection_source": "5-fold stratified CV on training data only",
+  "champion_model": "Logistic Regression",
+  "champion_cv_pr_auc": 0.22752435177612762,
+  "test_positive_prevalence": 0.06875,
+  "test_used_for_model_selection": false,
+  "default_threshold": 0.5,
+  "production_ready": false,
+  "production_ready_reason": "Target is a financial-stress proxy, not an observed credit-default outcome."
+}

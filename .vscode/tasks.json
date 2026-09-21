@@ -1,0 +1,29 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "FinanceAI: First-time setup",
+      "type": "shell",
+      "command": "cmd",
+      "args": ["/c", "setup_windows.bat"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "problemMatcher": []
+    },
+    {
+      "label": "FinanceAI: Verify project",
+      "type": "shell",
+      "command": "cmd",
+      "args": ["/c", "verify_windows.bat"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "problemMatcher": []
+    },
+    {
+      "label": "FinanceAI: Start app",
+      "type": "shell",
+      "command": "cmd",
+      "args": ["/c", "START_FINANCEAI.bat"],
+      "options": {"cwd": "${workspaceFolder}"},
+      "problemMatcher": []
+    }
+  ]
+}

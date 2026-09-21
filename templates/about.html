@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}
+About · FinanceAI 2.0
+{% endblock %}
+
+{% block content %}
+<section class="page-head">
+    <div>
+        <span class="eyebrow">ABOUT FINANCEAI 2.0</span>
+        <h1>Intelligent Personal Finance & Risk Analysis System</h1>
+        <p>
+            FinanceAI is a Flask-based personal finance platform that combines
+            money management, explainable analytics, machine learning and a local
+            retrieval-based finance assistant in one application.
+        </p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="grid two">
+        <article class="card">
+            <h3>What is FinanceAI?</h3>
+            <p>
+                FinanceAI helps users understand their financial condition by
+                tracking income, expenses, savings, budgets, goals, assets,
+                liabilities and other financial indicators.
+            </p>
+            <p>
+                It converts financial data into readable scores, forecasts,
+                alerts, spending insights and educational recommendations.
+            </p>
+        </article>
+
+        <article class="card">
+            <h3>Project Objective</h3>
+            <p>
+                The objective is to provide simple and explainable financial
+                insights while demonstrating Flask, databases, data analytics,
+                machine learning and local information retrieval in one project.
+            </p>
+            <p>
+                FinanceAI is designed as an educational decision-support system,
+                not as a replacement for professional financial or lending advice.
+            </p>
+        </article>
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-head">
+        <span class="eyebrow">CORE MODULES</span>
+        <h2>FinanceAI Modules</h2>
+    </div>
+
+    <div class="grid three">
+        <article class="card feature-card">
+            <div class="icon">01</div>
+            <h3>Financial Health</h3>
+            <p>Generates a 0–100 Financial Health Score with prioritized educational recommendations.</p>
+        </article>
+
+        <article class="card feature-card">
+            <div class="icon">02</div>
+            <h3>Transactions & Budget</h3>
+            <p>Tracks income and expenses, category budgets, CSV data and a 50/30/20 planning baseline.</p>
+        </article>
+
+        <article class="card feature-card">
+            <div class="icon">03</div>
+            <h3>Goals & Net Worth</h3>
+            <p>Tracks savings goals, assets, investments and liabilities to show overall financial progress.</p>
+        </article>
+
+        <article class="card feature-card">
+            <div class="icon">04</div>
+            <h3>Cash-flow Forecast</h3>
+            <p>Uses transaction history to estimate income, expenses and savings over 30, 60 and 90 days.</p>
+        </article>
+
+        <article class="card feature-card">
+            <div class="icon">05</div>
+            <h3>Spending Intelligence</h3>
+            <p>Uses K-Means for spending behavior and Isolation Forest to flag unusual spending patterns.</p>
+        </article>
+
+        <article class="card feature-card">
+            <div class="icon">06</div>
+            <h3>Credit Stress</h3>
+            <p>Uses a trained Logistic Regression model for experimental financial-stress analysis.</p>
+        </article>
+
+        <article class="card feature-card">
+            <div class="icon">07</div>
+            <h3>Loan Risk</h3>
+            <p>Uses an Extra Trees model for experimental historical loan-risk ranking and analysis.</p>
+        </article>
+
+        <article class="card feature-card">
+            <div class="icon">08</div>
+            <h3>Local Finance Assistant</h3>
+            <p>Uses local TF-IDF retrieval and FinanceAI account context to explain finance concepts without an external AI API.</p>
+        </article>
+
+        <article class="card feature-card">
+            <div class="icon">09</div>
+            <h3>History & Reports</h3>
+            <p>Stores analyses in readable tables and supports CSV exports and downloadable PDF reports.</p>
+        </article>
+    </div>
+</section>
+
+<section class="finance-section tech-section">
+    <div class="finance-section-heading">
+        <span class="finance-eyebrow">TECHNOLOGY STACK</span>
+        <h2>Built with modern technologies</h2>
+    </div>
+
+    <div class="tech-grid">
+        <div class="tech-item"><strong>Python</strong><span>Core Language</span></div>
+        <div class="tech-item"><strong>Flask</strong><span>Backend</span></div>
+        <div class="tech-item"><strong>scikit-learn</strong><span>Machine Learning</span></div>
+        <div class="tech-item"><strong>Pandas / NumPy</strong><span>Data Processing</span></div>
+        <div class="tech-item"><strong>SQLite / MySQL</strong><span>Database</span></div>
+        <div class="tech-item"><strong>TF-IDF</strong><span>Local Knowledge Retrieval</span></div>
+        <div class="tech-item"><strong>HTML / CSS</strong><span>User Interface</span></div>
+        <div class="tech-item"><strong>JavaScript</strong><span>Frontend Interaction</span></div>
+    </div>
+</section>
+
+<section class="notice warning-notice">
+    <strong>Responsible Use Notice:</strong>
+    FinanceAI is an educational project. Credit Stress and Loan Risk are experimental modules,
+    forecasts are estimates, and anomaly flags are review prompts. None of these outputs should
+    be used as official credit scores, professional financial advice or real lending decisions.
+</section>
+
+<section class="section">
+    <div class="card" style="text-align:center;">
+        <span class="eyebrow">CURRENT VERSION</span>
+        <h2>FinanceAI 2.0</h2>
+        <p class="muted">Personal Finance + Machine Learning + Forecasting + Local RAG</p>
+    </div>
+</section>
+{% endblock %}

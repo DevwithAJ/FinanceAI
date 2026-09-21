@@ -1,0 +1,50 @@
+{
+  "champion_model": "Extra Trees",
+  "recommended_threshold": 0.23200238873039322,
+  "default_metrics": {
+    "Accuracy": 0.9864528614874205,
+    "Balanced Accuracy": 0.5,
+    "Precision": 0.0,
+    "Recall": 0.0,
+    "F1": 0.0,
+    "ROC-AUC": 0.6487199139745584,
+    "PR-AUC": 0.032607298091303444,
+    "MCC": 0.0
+  },
+  "tuned_metrics": {
+    "Accuracy": 0.9820293060547415,
+    "Balanced Accuracy": 0.5178857417406424,
+    "Precision": 0.1,
+    "Recall": 0.04081632653061224,
+    "F1": 0.057971014492753624,
+    "ROC-AUC": 0.6487199139745584,
+    "PR-AUC": 0.032607298091303444,
+    "MCC": 0.05576506301578787
+  },
+  "default_confusion_matrix": [
+    [
+      3568,
+      0
+    ],
+    [
+      49,
+      0
+    ]
+  ],
+  "tuned_confusion_matrix": [
+    [
+      3550,
+      18
+    ],
+    [
+      47,
+      2
+    ]
+  ],
+  "test_prevalence": 0.013547138512579486,
+  "pr_auc_lift_over_prevalence": 2.4069509631886645,
+  "brier_score": 0.015726299681643467,
+  "top_decile_risk_rate": 0.022099447513812154,
+  "top_decile_lift": 1.631300033825685,
+  "production_ready": false
+}
